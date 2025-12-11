@@ -14,4 +14,5 @@ export class Curso {
 
   @OneToMany(() => Disciplina, (d) => d.curso)
   disciplinas: Disciplina[];
+  alunos: any;
 }

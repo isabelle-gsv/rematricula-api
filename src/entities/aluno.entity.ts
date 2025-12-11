@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BeforeInsert } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, BeforeInsert, JoinColumn } from 'typeorm';
 import { Curso } from './curso.entity';
 import { MatriculaAluno } from './matricula.entity';
 import * as bcrypt from 'bcrypt';
@@ -18,10 +18,14 @@ export class Aluno {
   email: string;
 
   @Column()
-  senha: string;
+  senha: string;    
 
-  @ManyToOne(() => Curso, { eager: true })
+  @ManyToOne(() => Curso, (c) => c.alunos, { eager: true })
+  @JoinColumn({name:'cursoId'})
   curso: Curso;
+
+  @Column()
+  cursoId:number;
 
   @OneToMany(() => MatriculaAluno, (m) => m.aluno)
   matriculas: MatriculaAluno[];
